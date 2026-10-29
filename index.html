@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rentzy.it — Presto Online</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; connect-src 'self'; form-action https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link href="fonts/poppins.css" rel="stylesheet">
     <style>
         /* ===== RESET & BASE ===== */
         *, *::before, *::after {
@@ -569,6 +570,8 @@
                 action="https://formspree.io/f/mdavkvzo" 
                 method="POST">
                 <input type="email" name="email" placeholder="Inserisci la tua email..." required>
+                <!-- Honeypot anti-spam: nascosto agli utenti, Formspree scarta gli invii che lo compilano -->
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
                 <button type="submit">Resta Aggiornato</button>
             </form>
 
@@ -642,55 +645,6 @@
     </footer>
 
     <!-- ===== COUNTDOWN SCRIPT ===== -->
-    <!-- ===== COUNTDOWN SCRIPT ===== -->
-<script>
-    // Data di lancio fissa: 1 agosto 2026 alle 00:00 (ora italiana CEST)
-    const launchDate = new Date('2026-08-01T00:00:00+02:00');
-
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = launchDate.getTime() - now;
-
-        // Quando il countdown arriva a zero, ferma tutto su 00
-        if (distance < 0) {
-            document.getElementById('days').textContent = '00';
-            document.getElementById('hours').textContent = '00';
-            document.getElementById('minutes').textContent = '00';
-            document.getElementById('seconds').textContent = '00';
-            return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById('days').textContent = String(days).padStart(2, '0');
-        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-
-    // ===== Intersection Observer for scroll animations =====
-    const observerOptions = {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'fadeInUp 0.7s ease forwards';
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-    document.querySelectorAll('.feature-card, .step').forEach(el => {
-        el.style.opacity = '0';
-        observer.observe(el);
-    });
-</script>
+<script src="script.js"></script>
 </body>
 </html>
